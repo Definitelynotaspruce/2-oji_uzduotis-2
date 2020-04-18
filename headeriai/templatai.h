@@ -37,7 +37,9 @@ void isvedimas(Container &a, std::string failoVardas)
     auto it = a.begin();
     while (it != a.end())
     {
-        fr << std::left << std::setw(15) << (*it).getvar() << std::left << std::setw(15) << (*it).getpav() << std::right << std::setw(4) << std::fixed << std::setprecision(2) << (*it).getpazymiai() << std::endl;             
+        fr << std::left << std::setw(15) << (*it).getVardas() << std::left << std::setw(15); 
+        fr << (*it).getPavarde() << std::right << std::setw(4);
+        fr << std::fixed << std::setprecision(2) << (*it).getGalutinis() << std::endl;             
         it++;
     }     
     fr.close();
@@ -64,7 +66,8 @@ void skaitymasfailo( Container &a, char &mediana, std::string failopavadinimas )
         fd.seekg (0, std::ios::beg);
         while ( getline (fd, eilute) )
         {
-            a.push_back(eiluciu_skaitymas( nd, mediana,  eilute ));    
+            Studentas stud(mediana,  eilute);
+            a.push_back(stud);               
         }
         fd.close();
     }

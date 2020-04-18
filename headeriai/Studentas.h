@@ -8,21 +8,25 @@ class Studentas
 {
 private:
     std::string vardas, pavarde;
-    std::vector<int> paz;
-    int egz;
+    std::vector<int> pazymiai;
+    int egzaminas;
     double galutinis;
 
 public:
-    void setvarpar(std::string &a, std::string &b);
 
-    void setpazymiai(std::vector<int> &a, int &b);
+    Studentas() : egzaminas(0) { }  // default konstruktorius
+    Studentas( char &mediana, std::string &ei ) ;
+    
+    void setVardasPavarde(std::string &vardas, std::string &pavarde);
 
-    void galutiniz(char &a);
+    void setPazymiai(std::vector<int> &pazymiai, int &egzaminas);
 
-    inline std::string getvar() const { return vardas; };
-    inline std::string getpav() const { return pavarde; };
+    double galutinisBalas(char &a);
 
-    double getpazymiai();
-    double mmediana(std::vector<int> &paz);
-    double vidurkis(std::vector<int> &paz);
+    inline std::string getVardas() const { return vardas; };
+    inline std::string getPavarde() const { return pavarde; };
+
+    double getGalutinis();
+    double mediana(std::vector<int> &pazymiai);
+    double vidurkis(std::vector<int> &pazymiai);
 };

@@ -1,29 +1,45 @@
 #include "headeriai/Studentas.h"
+#include <sstream>
 
-void Studentas::setvarpar(std::string &a, std::string &b)
+Studentas::Studentas( char &mediana, std::string &ei)
+{    
+    std::string naujas;
+    std::istringstream e(ei);    
+    e >> vardas >> pavarde;   
+    
+    while ( e >> naujas )
+    {        
+        pazymiai.push_back(stoi(naujas));
+    }   
+    egzaminas = *(pazymiai.end()-1);
+    pazymiai.erase (pazymiai.end()-1);
+    galutinis = galutinisBalas(mediana);     
+}
+
+void Studentas::setVardasPavarde(std::string &a, std::string &b)
 {
     vardas = a;
     pavarde = b;
 }
-void Studentas::setpazymiai(std::vector<int> &a, int &b)
+void Studentas::setPazymiai(std::vector<int> &a, int &b)
 {
-    paz = a;
-    egz = b;
+    pazymiai = a;
+    egzaminas = b;
 }
-void Studentas::galutiniz(char &a)
+double Studentas::galutinisBalas(char &a)
 {
-    if (paz.size() == 0)
-        galutinis = egz * 0.6;
+    if (pazymiai.size() == 0)
+        return egzaminas * 0.6;
     else if (a == 'm')
-        galutinis = mmediana(paz) * 0.4 + egz * 0.6;
+        return mediana(pazymiai) * 0.4 + egzaminas * 0.6;
     else
-        galutinis = vidurkis(paz) * 0.4 + egz * 0.6;
+        return vidurkis(pazymiai) * 0.4 + egzaminas * 0.6;
 }
 
-double Studentas::getpazymiai() { return galutinis; }
+double Studentas::getGalutinis() { return galutinis; }
 
 // cia medianai apskaiciuoti
-double Studentas::mmediana ( std::vector<int> &sk)
+double Studentas::mediana ( std::vector<int> &sk)
 {
     std::sort(sk.begin(), sk.end());
     if (sk.size() % 2 != 0)  return (double)sk[sk.size() / 2];  

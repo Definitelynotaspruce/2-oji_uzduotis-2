@@ -87,7 +87,7 @@ Studentas vardu_ivedimas( int &n, char &ranka, char &mediana)
     int pzmsk, egzas, galas; 
     std::cout << "Iveskite " << n+1 << "-ojo studento varda ir pavarde ";
     std::cin >> vardas >> pavarde;       
-    a.setvarpar( vardas, pavarde );
+    a.setVardasPavarde( vardas, pavarde );
 
     if (ranka == 'r') nd = skaiciu_ivedimas(n);
     else nd = skaiciu_generavimas(n);  
@@ -95,38 +95,17 @@ Studentas vardu_ivedimas( int &n, char &ranka, char &mediana)
     std::cout << "Iveskite " << n+1 << "-ojo studento egzamino bala ";
     std::cin >> egzas;
     patikrint(egzas);
-    a.setpazymiai(nd,egzas); 
-    a.galutiniz (mediana);         
-    return a;
-}
-
-Studentas eiluciu_skaitymas(int &k, char &mediana, std::string &ei)
-{
-    Studentas a;
-    int egz;
-    std::string naujas;
-    std::string vardas, pavarde;
-    std::vector<int> nd;
-    std::istringstream e(ei);    
-    e >> vardas >> pavarde;   
-    a.setvarpar(vardas, pavarde); 
-    for ( int i = 0; i < k ; i++ )
-    {
-        e >> naujas;
-        nd.push_back(stoi(naujas));
-    }   
-    e >> egz;
-    a.setpazymiai(nd, egz);
-    a.galutiniz (mediana); 
+    a.setPazymiai(nd,egzas); 
+    a.galutinisBalas (mediana);         
     return a;
 }
 
 bool maziau_uz_5 ( Studentas &s)
 {
-    return s.getpazymiai() < 5;
+    return s.getGalutinis() < 5;
 }
 
 bool daugiau_uz_5 ( Studentas &s)
 {
-    return s.getpazymiai() >= 5;
+    return s.getGalutinis() >= 5;
 }
