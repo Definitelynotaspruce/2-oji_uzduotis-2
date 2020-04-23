@@ -30,98 +30,47 @@ Jeigu vartotojas paririnkęs, jog duomenis ves ranka:
 2. Atsidaryti terminalą toje atsisiųsto failo vietoje ir įrašyti komandą "make" (nuo v0.3)
 3. Rašyti ./main arba main.exe (jei Windows)
 
-# v1.0 analizė
+# v1.1 
 
-- Programa iš prieš tai buvusių trijų skirtingų sulipdyta į vieną
-- Naudojami  "template"
-- Naudojami 4 skirtingi konteinerių atskyrimo būdai skirtingais algoritmais
-- Pridėtas "exception"
+- Pridėti konstruktoriai
+- Ištaisytos smulkios klaidos
+- Pratestuotas programos veikimo laikas su skirtingais optimizavimo lygiais
 
-## Pirmoji strategija
-Studentai iš vieno bendro konteinerio perrašomi į du kitus atskirus naudojant remove_copy_if bei copy_if algoritmus, vėliau bendras konteineris ištrinamas.
+## v1.1 analizė
 
-## Antroji strategija
-Tik vargsai studentai yra perrašomi iš bendro studentų konteinerio naudojant remove_copy_if funkciją, vėliau vargšai yra ištrinami.
+Spartos analizė atlikta su vektoriais.
 
-## Trečioji strategija
-Naudojant stable_partition algoritmą studentai išskirstomi į dvi dalis, vėliau naudojant copy algoritmą nukopijuojami vargšai studentai , jie ištrinami iš bendro studentų konteinerio.
+### Be optimizacijos
+|Be optimizacijos  |1 000000 |10 000000  |
+|------------------|----------|------------|
+|Nuskaitymas  |4|40|
+|Perrašymas |0.41|5.2|
 
-## Ketvirtoji strategija
-Studentai iš vieno bendro konteinerio perrašomi į du kitus atskirus naudojant remove_copy_if bei copy_if algoritmus, tačiau vėliau bendras konteineris nėra ištrinamas (praktiškai tas pats kaip ir pirmoji strategija, tik dėl įdomumo, neefektyvu)
+### -O1
+| -O1  |1 000000 |10 000000  |
+|------------------|----------|------------|
+|Nuskaitymas  |1.8|18|
+|Perrašymas |0.2|2.7|
 
-## Rezultatų lentelė (spartos analizė)
+### -O2
+| -O2  |1 000000 |10 000000  |
+|------------------|----------|------------|
+|Nuskaitymas  |1.9|18.5|
+|Perrašymas |0.17|2.5|
 
-|Studentų kiekis =    10000000       |Vektorius |Deque  |List
-|-----------------------------|----------|------------|------------|
-|Pirmoji strategija |8.7|5.8| 6.9|
-|Antroji strategija |4.4|4.1| 4.2|
-|Trečioji strategija |8.86|7.85| 8.6|
-|Ketvirtoji strategija |7.33|5| 5.9|
-
-|Studentų kiekis =    1000000      |Vektorius |Deque  |List
-|-----------------------------|----------|------------|------------|
-|Pirmoji strategija |0.76|0.57| 0.68|
-|Antroji strategija |  0.43|0.45| 0.43|
-|Trečioji strategija |0.76|0.74| 0.97|
-|Ketvirtoji strategija |0.64|0.51| 0.6|
+### -O3
+| -O3  |1 000000 |10 000000  |
+|------------------|----------|------------|
+|Nuskaitymas  |1.9|18.3|
+|Perrašymas |0.18|2.5|
 
 ## Išvados:
-Antroji strategija man buvo efektyviausia, konteinerių išskirstymo greitis akivaizdžiai trumpesnis nei visų kitų.
+Pridėjus -O1 programos nuskaitymo bei perrašymo greitis sumažėjo beveik lygiai dvigubai. Taikant -O2 bei -O3 skirtumo nuo pirmo optimizacijos lygio nebuvo.
  
-# Kiti release 
+# Pradinė užduoties repozitorija
 
-# <br />[v0.5](https://github.com/Definitelynotaspruce/2-oji_uzduotis/releases/tag/v0.5) 
+# <br />[v1.0](https://github.com/Definitelynotaspruce/2-oji_uzduotis) 
 
-- Trys atskiros programos Vector, List bei Deque konteinerių veikimo spartos analizei
-- Matuojamas studentų nuskaitymas bei padalinimas
-
-## v0.5 spartos analizė
-Naudojamo kompiuterio parametrai: Intel core i5 7th gen, 8gb RAM, SSD.
-### Vector
-
-|Funkcija                     |n = 1000    |n = 10000     |n = 100000    |n = 1000000   |n = 10000000 |
-|-----------------------------|----------|------------|------------|------------|-----------|
-|Nuskaitymas |0 s|0.04 s|0.4 s|3.7 s|37 s|
-|Padalinimas|0 s|0.01 s|0.31 s|5 s|55 s|
-
-### List
-
-|Funkcija                     |n = 1000    |n = 10000     |n = 100000    |n = 1000000   |n = 10000000 |
-|-----------------------------|----------|------------|------------|------------|-----------|
-|Nuskaitymas|0 s|0.04 s|0.5 s|4.5 s|42 s|
-|Padalinimas|0 s|0.02s|0.23 s|2.3 s|30 s|
-
-### Deque
-
-|Funkcija                     |n = 1000    |n = 10000     |n = 100000    |n = 1000000   |n = 10000000 |
-|-----------------------------|----------|------------|------------|------------|-----------|
-|Nuskaitymas|0 s|0.04 s|0.5s|3.7 s|38 s|
-|Padalinimas|0 s|0.02|0.1 s|4 s|43 s|
-
-### Išvados
-Efektyviausiai veikė list konteineris, greičio skirtumas akivaizdžiai matomas. Vector konteineris buvo lėčiausias.
-
-# <br />[v0.4](https://github.com/Definitelynotaspruce/2-oji_uzduotis/releases/tag/v0.4) 
-
-- Penkių studentų .txt failų generavimas bei nuskaitymas naudojant vektorius
-- Studentai rūšiuojami į du atskirus vektorius pagal metinį vidurkį (mažiau už 5 bei daugiau už 5)
-- Programa veikimo metu atlieka spartos analizę (matuojami nuskaitymo, splitinimo, skirstymo greičiai) 
-
-# <br />[v0.3](https://github.com/Definitelynotaspruce/2-oji_uzduotis/releases/tag/v0.3) 
-
-- Programos failai suskirstyti į headerius
-- Pridėtas Makefile
-
-# <br />[v0.2](https://github.com/Definitelynotaspruce/2-oji_uzduotis/releases/tag/v0.2)
-
-- Programa gali nuskaityti duomenis iš duoto failo
-- Rezultatai vedami į .txt failą "pažymiai.txt"
-- Išvedimas lygiuojamas
-
-# <br />[v0.1](https://github.com/Definitelynotaspruce/2-oji_uzduotis/releases/tag/v0.1) 
-
-- Apskaiciuojamas studentu namu darbu pazymiu vidurkis/mediana
-- Rezultatai pateikiami lentelės forma
 
 
 

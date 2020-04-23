@@ -47,23 +47,17 @@ void isvedimas(Container &a, std::string failoVardas)
 
 template <typename Container>
 void skaitymasfailo( Container &a, char &mediana, std::string failopavadinimas )
-{    
-    int nd = 0 ; // kintamieji elementu skaiciui saugoti
+{   
     std::string vardas, pavarde, eilute, kiek; 
     std::ifstream fd;
     try
     {
         fd.open (failopavadinimas);
-        if(!fd.is_open())
+        if( !fd.is_open() )
         {
             throw std::ios_base::failure("KLAIDA:: NERA TOKIO FAILO, todel viska veskite ranka :) ");
         }
-        getline (fd, eilute);
-        std::istringstream na(eilute);    
-        while ( na >> kiek ) nd++;
-        nd = nd - 3;    
-        fd.clear(); //cia kad nusoktu i pacia pradzia
-        fd.seekg (0, std::ios::beg);
+        std::istringstream na(eilute);
         while ( getline (fd, eilute) )
         {
             Studentas stud(mediana,  eilute);
@@ -100,10 +94,8 @@ void tekstogeneravimas (Container &a,  char &mediana)
     srand (time(NULL));    
     int pazymiusk = 10 ;
     int failusk;
-    int k = 0;
     Container protingas;
     Container vargsas;
-    auto vidurinis = a.begin();
     std::cout << "----------------------------------------------" << std::endl << std::endl;
     
     for (int z = 0; z < FAILU_SK; z++ )
@@ -137,8 +129,8 @@ void tekstogeneravimas (Container &a,  char &mediana)
 
         start = std::chrono::system_clock::now(); 
         //conteineriu split funkcijos
-        split_1  (a, protingas, vargsas);
-        //split_2 (a, protingas, vargsas);  
+        //split_1  (a, protingas, vargsas);
+        split_2 (a, protingas, vargsas);  
         //split_3 (a, vargsas);
         //split_4 (a, protingas, vargsas);
         end = std::chrono::system_clock::now();        
@@ -148,7 +140,7 @@ void tekstogeneravimas (Container &a,  char &mediana)
         start = std::chrono::system_clock::now();        
        //int protinguSk = a.size();
         isvedimas(vargsas, std::to_string(failusk) + "vargsai.txt");
-        isvedimas(protingas, std::to_string(failusk) + "protingi.txt"); 
+        isvedimas(a, std::to_string(failusk) + "protingi.txt"); 
         end = std::chrono::system_clock::now();
         elapsed_seconds = end - start;
         std::cout << "Isvedimas uztruko " << elapsed_seconds.count() << std::endl;

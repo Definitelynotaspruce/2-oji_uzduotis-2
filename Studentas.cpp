@@ -1,19 +1,19 @@
 #include "headeriai/Studentas.h"
 #include <sstream>
 
-Studentas::Studentas( char &mediana, std::string &ei)
-{    
+Studentas::Studentas(char &mediana, std::string &ei)
+{
     std::string naujas;
-    std::istringstream e(ei);    
-    e >> vardas >> pavarde;   
-    
-    while ( e >> naujas )
-    {        
+    std::istringstream e(ei);
+    e >> vardas >> pavarde;
+
+    while (e >> naujas)
+    {
         pazymiai.push_back(stoi(naujas));
-    }   
-    egzaminas = *(pazymiai.end()-1);
-    pazymiai.erase (pazymiai.end()-1);
-    galutinis = galutinisBalas(mediana);     
+    }
+    egzaminas = *(pazymiai.end() - 1);
+    pazymiai.erase(pazymiai.end() - 1);
+    galutinis = galutinisBalas(mediana);
 }
 
 void Studentas::setVardasPavarde(std::string &a, std::string &b)
@@ -39,17 +39,20 @@ double Studentas::galutinisBalas(char &a)
 double Studentas::getGalutinis() { return galutinis; }
 
 // cia medianai apskaiciuoti
-double Studentas::mediana ( std::vector<int> &sk)
+double Studentas::mediana(std::vector<int> &sk)
 {
     std::sort(sk.begin(), sk.end());
-    if (sk.size() % 2 != 0)  return (double)sk[sk.size() / 2];  
-    return (double)(sk[(sk.size() - 1) / 2] + sk[sk.size() / 2]) / 2.0; 
+    if (sk.size() % 2 != 0)
+        return (double)sk[sk.size() / 2];
+    return (double)(sk[(sk.size() - 1) / 2] + sk[sk.size() / 2]) / 2.0;
 }
 
 // cia vidurkiui apskaiciuoti
-double Studentas::vidurkis ( std::vector<int> &sk )
+double Studentas::vidurkis(std::vector<int> &sk)
 {
-    double suma;
-    for (int i = 0; i < sk.size(); i++) suma+=sk[i];
-    return suma/sk.size();
+    double suma = 0;
+    for (size_t i = 0; i < sk.size(); i++)
+        suma += sk[i];
+
+    return suma / sk.size();
 }

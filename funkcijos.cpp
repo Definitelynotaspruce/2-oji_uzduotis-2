@@ -84,7 +84,7 @@ Studentas vardu_ivedimas( int &n, char &ranka, char &mediana)
     Studentas a;
     std::string vardas, pavarde;
     std::vector<int> nd;
-    int pzmsk, egzas, galas; 
+    int egzas;
     std::cout << "Iveskite " << n+1 << "-ojo studento varda ir pavarde ";
     std::cin >> vardas >> pavarde;       
     a.setVardasPavarde( vardas, pavarde );

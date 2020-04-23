@@ -14,8 +14,8 @@ private:
 
 public:
 
-    Studentas() : egzaminas(0) { }  // default konstruktorius
-    Studentas( char &mediana, std::string &ei ) ;
+    Studentas() : egzaminas(0) { }  
+    Studentas( char &mediana, std::string &ei );
     
     void setVardasPavarde(std::string &vardas, std::string &pavarde);
 
