@@ -79,7 +79,7 @@ std::vector<int> skaiciu_generavimas (int &n)
 }
 
 // sita funkcija studentu informacijos ivedinejimui
-Studentas vardu_ivedimas( int &n, char &ranka, char &mediana)
+Studentas vardu_ivedimas(int &n, char &ranka, char &mediana)
 {
     Studentas a;
     std::string vardas, pavarde;
