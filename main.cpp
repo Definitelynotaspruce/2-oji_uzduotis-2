@@ -4,7 +4,7 @@
 #include "headeriai/templatai.h"
 
 int main()
-{      
+{
     char generavimas; //kintamasis patikrinimui ar vartotojas nori generuoti failus ar ne
     char type; // pasirenkamo konteinerio tipas
     

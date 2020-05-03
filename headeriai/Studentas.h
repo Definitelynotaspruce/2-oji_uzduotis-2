@@ -34,8 +34,8 @@ public:
     Studentas operator-(const Studentas&) const; 
     
     bool operator==(const Studentas& studentas) const;
-    bool operator>(const Studentas& studentas) const {return galutinis > studentas.galutinis; }
-    bool operator<(const Studentas& studentas) const {return galutinis < studentas.galutinis; }
+    inline bool operator>(const Studentas& studentas) const {return galutinis > studentas.galutinis; }
+    inline bool operator<(const Studentas& studentas) const {return galutinis < studentas.galutinis; }
     
     void setVardasPavarde(const std::string &vardas, const std::string &pavarde);
     void setVardasPavarde(const std::string &a );    

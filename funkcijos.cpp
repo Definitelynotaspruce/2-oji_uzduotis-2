@@ -92,7 +92,7 @@ Studentas vardu_ivedimas(int &n, char &ranka)
     std::cout << "Iveskite " << n+1 << "-ojo studento egzamino bala ";
     std::cin >> egzas;
     patikrint(egzas);
-    Studentas a(vardas, pavarde, nd, egzas); 
+    Studentas a(vardas, pavarde, nd, egzas);     
              
     return a;
 }

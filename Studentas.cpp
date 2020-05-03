@@ -73,7 +73,7 @@ bool Studentas::operator==(const Studentas &studentas) const
 
 Studentas Studentas::operator+(const Studentas &studentas) const
 {
-    if (*this == studentas)
+    if (vardas == studentas.vardas && pavarde == studentas.pavarde)
     {
         Studentas s(*this);
         s.pazymiai.insert(s.pazymiai.end(), studentas.pazymiai.begin(), studentas.pazymiai.end());
