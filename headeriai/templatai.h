@@ -20,9 +20,9 @@ Container nuskaitymas (char &failai)
     
     Container a;
 
-    if (failai == 't') tekstogeneravimas (a, mediana);
-    else if (ivedimas == 'f') skaitymasfailo(a, mediana, "Studentai.txt");
-    else ivedinejimas(a, mediana);
+    if (failai == 't') tekstogeneravimas (a);
+    else if (ivedimas == 'f') skaitymasfailo(a, "Studentai.txt");
+    else ivedinejimas(a);
          
     return a;  
 }
@@ -46,7 +46,7 @@ void isvedimas(Container &a, std::string failoVardas)
 }
 
 template <typename Container>
-void skaitymasfailo( Container &a, char &mediana, std::string failopavadinimas )
+void skaitymasfailo( Container &a, std::string failopavadinimas )
 {   
     std::string vardas, pavarde, eilute, kiek; 
     std::ifstream fd;
@@ -60,7 +60,7 @@ void skaitymasfailo( Container &a, char &mediana, std::string failopavadinimas )
         std::istringstream na(eilute);
         while ( getline (fd, eilute) )
         {
-            Studentas stud(mediana,  eilute);
+            Studentas stud(eilute);
             a.push_back(stud);               
         }
         fd.close();
@@ -68,13 +68,13 @@ void skaitymasfailo( Container &a, char &mediana, std::string failopavadinimas )
     catch(const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
-        ivedinejimas(a, mediana);
+        ivedinejimas(a);
         return; 
     }
 }
 
 template <typename Container>
-void ivedinejimas(Container &a,  char &mediana)
+void ivedinejimas(Container &a)
 {
     char ranka;
     int n;
@@ -85,11 +85,11 @@ void ivedinejimas(Container &a,  char &mediana)
     std::cin >> ranka;
     cpatikrinimas(ranka, 'r','g');   
     for (int i = 0; i < n; i++)
-    a.push_back(vardu_ivedimas(i, ranka, mediana));
+    a.push_back(vardu_ivedimas(i, ranka));
 }
 
 template <typename Container>
-void tekstogeneravimas (Container &a,  char &mediana)
+void tekstogeneravimas (Container &a)
 { 
     srand (time(NULL));    
     int pazymiusk = 10 ;
@@ -122,7 +122,7 @@ void tekstogeneravimas (Container &a,  char &mediana)
         std::cout << std::endl << "Failo generavimas uztruko " << elapsed_seconds.count() << std::endl;   
         
         start = std::chrono::system_clock::now();        
-        skaitymasfailo(a, mediana, "students" + std::to_string(failusk) + ".txt");
+        skaitymasfailo(a, "students" + std::to_string(failusk) + ".txt");
         end = std::chrono::system_clock::now();
         elapsed_seconds = end - start;
         std::cout << "Skaitymas is failo uztruko " << elapsed_seconds.count() << std::endl;

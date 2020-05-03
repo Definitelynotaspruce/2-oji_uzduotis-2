@@ -4,20 +4,7 @@
 #include "headeriai/templatai.h"
 
 int main()
-{
-    Studentas s1('v', "Jolanta Kosiakaite 1 4 5 2 3 10"), s3;
-    Studentas s2 = s1;
-    s2.setVardasPavarde("Jolanta Kosiakaite");
-    std::cout << (s2 == s1) << std::endl;
-    s3 = s1 + s2;
-    auto pt = s3.getPazymiai();
-    std::cout << s3.getVardas() << " " << pt.size() << std::endl;
-
-    for(auto el : pt)
-    {
-        std::cout << el << " " ;
-    }
-
+{      
     char generavimas; //kintamasis patikrinimui ar vartotojas nori generuoti failus ar ne
     char type; // pasirenkamo konteinerio tipas
     

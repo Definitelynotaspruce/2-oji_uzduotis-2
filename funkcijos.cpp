@@ -79,24 +79,21 @@ std::vector<int> skaiciu_generavimas (int &n)
 }
 
 // sita funkcija studentu informacijos ivedinejimui
-Studentas vardu_ivedimas(int &n, char &ranka, char &mediana)
+Studentas vardu_ivedimas(int &n, char &ranka)
 {
-    Studentas a;
     std::string vardas, pavarde;
     std::vector<int> nd;
     int egzas;
     std::cout << "Iveskite " << n+1 << "-ojo studento varda ir pavarde ";
-    std::cin >> vardas >> pavarde;       
-    a.setVardasPavarde( vardas, pavarde );
-
+    std::cin >> vardas >> pavarde; 
     if (ranka == 'r') nd = skaiciu_ivedimas(n);
     else nd = skaiciu_generavimas(n);  
 
     std::cout << "Iveskite " << n+1 << "-ojo studento egzamino bala ";
     std::cin >> egzas;
     patikrint(egzas);
-    a.setPazymiai(nd,egzas); 
-    a.galutinisBalas (mediana);         
+    Studentas a(vardas, pavarde, nd, egzas); 
+             
     return a;
 }
 

@@ -1,7 +1,7 @@
 #include "headeriai/Studentas.h"
 #include <sstream>
 
-Studentas::Studentas(const char &mediana, const std::string &ei)
+Studentas::Studentas(const std::string &ei)
 {
     std::string naujas;
     std::istringstream e(ei);
@@ -13,7 +13,9 @@ Studentas::Studentas(const char &mediana, const std::string &ei)
     }
     egzaminas = *(pazymiai.end() - 1);
     pazymiai.erase(pazymiai.end() - 1);
-    galutinis = galutinisBalas(mediana);
+    setVidurkis();
+    setMediana();
+    galutinis = galutinisBalas();
 }
 
 Studentas::Studentas(const Studentas &studentas)
@@ -22,10 +24,12 @@ Studentas::Studentas(const Studentas &studentas)
     pavarde = studentas.pavarde;
     pazymiai = studentas.pazymiai;
     egzaminas = studentas.egzaminas;
+    vidurkis = studentas.vidurkis;
+    mediana = studentas.mediana;
     galutinis = studentas.galutinis;
 }
 
-Studentas& Studentas::operator=(const Studentas &studentas)
+Studentas &Studentas::operator=(const Studentas &studentas)
 {
     if (this != &studentas)
     {
@@ -33,6 +37,8 @@ Studentas& Studentas::operator=(const Studentas &studentas)
         pavarde = studentas.pavarde;
         pazymiai = studentas.pazymiai;
         egzaminas = studentas.egzaminas;
+        vidurkis = studentas.vidurkis;
+        mediana = studentas.mediana;
         galutinis = studentas.galutinis;
     }
 
@@ -41,42 +47,49 @@ Studentas& Studentas::operator=(const Studentas &studentas)
 
 bool Studentas::operator==(const Studentas &studentas) const
 {
-    if(pazymiai.size() == studentas.pazymiai.size())
+    if (pazymiai.size() == studentas.pazymiai.size())
     {
         auto it2 = studentas.pazymiai.begin();
-        for(auto it = pazymiai.begin(); it != pazymiai.end(); ++it, ++it2)
+        for (auto it = pazymiai.begin(); it != pazymiai.end(); ++it, ++it2)
         {
-            if(*it != *it2)
+            if (*it != *it2)
                 return false;
         }
     }
     else
+    {
         return false;
-    if(vardas == studentas.vardas && pavarde == studentas.pavarde)
-        if(egzaminas == studentas.egzaminas && galutinis == studentas.galutinis)
-            return true;
-    else return false;
+    }
 
-    return false; // Jeigu viskas sufailina 
+    if (vardas == studentas.vardas && pavarde == studentas.pavarde && egzaminas == studentas.egzaminas && galutinis == studentas.galutinis)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 Studentas Studentas::operator+(const Studentas &studentas) const
 {
-    if(*this == studentas)
+    if (*this == studentas)
     {
         Studentas s(*this);
-        s.pazymiai.insert(s.pazymiai.end(), studentas.pazymiai.begin(), studentas.pazymiai.end() );
+        s.pazymiai.insert(s.pazymiai.end(), studentas.pazymiai.begin(), studentas.pazymiai.end());
 
         return s;
     }
+    return *this;
 }
+
 
 void Studentas::setVardasPavarde(const std::string &a, const std::string &b)
 {
     vardas = a;
     pavarde = b;
 }
-void Studentas::setVardasPavarde(const std::string &a )
+void Studentas::setVardasPavarde(const std::string &a)
 {
     std::string naujas;
     std::istringstream e(a);
@@ -87,31 +100,42 @@ void Studentas::setPazymiai(std::vector<int> &a, int &b)
     pazymiai = a;
     egzaminas = b;
 }
-double Studentas::galutinisBalas(const char &a)
+void Studentas::setPazymiai(std::vector<int> &a)
+{
+    pazymiai = a;
+}
+
+double Studentas::galutinisBalas()
 {
     if (pazymiai.size() == 0)
-        return egzaminas * 0.6;
-    else if (a == 'm')
-        return mediana(pazymiai) * 0.4 + egzaminas * 0.6;
+    {
+        galutinis = egzaminas * 0.6;
+
+        return galutinis;
+    }
     else
-        return vidurkis(pazymiai) * 0.4 + egzaminas * 0.6;
+    {
+        galutinis = vidurkis * 0.4 + egzaminas * 0.6;
+
+        return galutinis;
+    }
 }
 
 // cia medianai apskaiciuoti
-double Studentas::mediana(std::vector<int> &sk)
+void Studentas::setMediana()
 {
-    std::sort(sk.begin(), sk.end());
-    if (sk.size() % 2 != 0)
-        return (double)sk[sk.size() / 2];
-    return (double)(sk[(sk.size() - 1) / 2] + sk[sk.size() / 2]) / 2.0;
+    std::sort(pazymiai.begin(), pazymiai.end());
+    if (pazymiai.size() % 2 != 0)
+        mediana = (double)pazymiai[pazymiai.size() / 2];
+    mediana = (double)(pazymiai[(pazymiai.size() - 1) / 2] + pazymiai[pazymiai.size() / 2]) / 2.0;
 }
 
 // cia vidurkiui apskaiciuoti
-double Studentas::vidurkis(std::vector<int> &sk)
+void Studentas::setVidurkis()
 {
     double suma = 0;
-    for (size_t i = 0; i < sk.size(); i++)
-        suma += sk[i];
+    for (size_t i = 0; i < pazymiai.size(); i++)
+        suma += pazymiai[i];
 
-    return suma / sk.size();
+    vidurkis = (suma / pazymiai.size());
 }

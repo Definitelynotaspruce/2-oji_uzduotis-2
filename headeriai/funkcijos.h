@@ -31,7 +31,7 @@ std::vector<int> skaiciu_ivedimas(int &n);
 std::vector<int> skaiciu_generavimas(int &n, char &a);
 
 // sita funkcija studentu informacijos ivedinejimui
-Studentas vardu_ivedimas(int &n, char &ranka, char &mediana);
+Studentas vardu_ivedimas(int &n, char &ranka);
 
 bool alfa(Studentas &a, Studentas &b);
 bool beta(Studentas &a, Studentas &b);
