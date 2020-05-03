@@ -30,6 +30,13 @@ Jeigu vartotojas paririnkęs, jog duomenis ves ranka:
 2. Atsidaryti terminalą toje atsisiųsto failo vietoje ir įrašyti komandą "make" (nuo v0.3)
 3. Rašyti ./main arba main.exe (jei Windows)
 
+# v1.2
+
+- Pridėti operatoriai +, =, <, >, ==
+- Pridetas destruktorius
+- Pridetas copy konstruktorius
+- Igyvendinta RULE OF 3
+
 # v1.1 
 
 - Pridėti konstruktoriai
