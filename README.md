@@ -30,6 +30,12 @@ Jeigu vartotojas paririnkęs, jog duomenis ves ranka:
 2. Atsidaryti terminalą toje atsisiųsto failo vietoje ir įrašyti komandą "make" (nuo v0.3)
 3. Rašyti ./main arba main.exe (jei Windows)
 
+# v1.5
+
+- Parašyta abstrakčioji bazinė klasė "Zmogus"
+- Derived klasė - S"Studentas"
+
+
 # v1.2
 
 - Pridėti operatoriai +, =, <, >, ==

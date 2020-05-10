@@ -3,11 +3,11 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include "zmogus.h"
 
-class Studentas
+class Studentas : public Zmogus
 {
 private:
-    std::string vardas, pavarde;
     std::vector<int> pazymiai = {};
     int egzaminas = 0;
     double vidurkis = 0, mediana = 0;
@@ -15,15 +15,15 @@ private:
 
 public:
 
-    Studentas() : egzaminas(0) { }  
+    Studentas() : egzaminas(0) {  }  
     Studentas( const std::string &ei );
-    Studentas(const std::string &vardas, const std::string &pavarde) : vardas(vardas), pavarde(pavarde) { }
+    Studentas(const std::string &vardas, const std::string &pavarde) : Zmogus(vardas, pavarde) { }
 
     Studentas(const std::string &vardas, const std::string &pavarde, const std::vector<int> &nd, const int &egzas) : 
-    vardas(vardas), pavarde(pavarde), pazymiai(nd), egzaminas(egzas) { setVidurkis(); setMediana(); galutinisBalas();  }
+    Zmogus(vardas, pavarde), pazymiai(nd), egzaminas(egzas) { setVidurkis(); setMediana(); galutinisBalas();  }
     
     Studentas(const std::string &vardas, const std::string &pavarde, const double &galutinis ) : 
-    vardas(vardas), pavarde(pavarde), galutinis(galutinis) { }
+    Zmogus(vardas, pavarde), galutinis(galutinis) { }
     
     ~Studentas() = default;
 
@@ -36,6 +36,8 @@ public:
     bool operator==(const Studentas& studentas) const;
     inline bool operator>(const Studentas& studentas) const {return galutinis > studentas.galutinis; }
     inline bool operator<(const Studentas& studentas) const {return galutinis < studentas.galutinis; }
+    inline bool operator>=(const Studentas& studentas) const {return galutinis >= studentas.galutinis; }
+    inline bool operator<=(const Studentas& studentas) const {return galutinis <= studentas.galutinis; }
     
     void setVardasPavarde(const std::string &vardas, const std::string &pavarde);
     void setVardasPavarde(const std::string &a );    
@@ -44,8 +46,6 @@ public:
    
     double galutinisBalas();
 
-    inline std::string getVardas() const { return vardas; };
-    inline std::string getPavarde() const { return pavarde; };
     inline double getVidurkis() const { return vidurkis; };
     inline double getMediana() const {return mediana; };
     inline int getEgzaminas() const {return egzaminas;};
