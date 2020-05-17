@@ -1,4 +1,8 @@
-# 2-oji_uzduotis
+Documentation           {#mainpage}
+========
+
+# 2-oji_užduotis
+[GitHub repozitorija](https://github.com/Definitelynotaspruce/2-oji_uzduotis)
 
 ANTROJI OOP UŽDUOTIS - programa, apskaičiuojanti studentų metinį vidurkį
 
@@ -19,7 +23,6 @@ Jeigu vartotojas paririnkęs, jog duomenis ves ranka:
    *  'r' arba 'g'
 6. Vedamas vardas bei pavardė
 7. Įvedamas egzamino balas
-
 8. Vyksta skaičiavimas pagal formulę:
     * Galutinis rezultatas = (vidurkis arba mediana) * 0.4 + (egzamino balas) * 0.6;
     
@@ -27,13 +30,47 @@ Jeigu vartotojas paririnkęs, jog duomenis ves ranka:
 
 1. Atsisiųsti norimą release
 2. Atsisiusti ir isidiegti C++ kompiliatorių (pvz GNU)
-2. Atsidaryti terminalą toje atsisiųsto failo vietoje ir įrašyti komandą "make" (nuo v0.3)
-3. Rašyti ./main arba main.exe (jei Windows)
+3. Atsidaryti terminalą toje atsisiųsto failo vietoje ir įrašyti komandą *make* (nuo v0.3)
+4. Rašyti *./main* arba *main.exe* (jei Windows)
+
+
+# v2.0
+- Sugeneruota ["Doxygen"](html/index.html) dokumentacija
+- Naudojantis Google Test frameworku realizuoti 10 Unit testų
+- Testų metu aptikta bei sutvarkyta smulki sudėties operatoriaus loginė klaida
+- Papildytas **Makefile** (Kad veiktų su testais) 
+
+## Kaip paleisti testavimą?
+**Turite būti įsidiegę *Google Test* frameworką!**
+1. Rašyti komandą *make test*
+2. Tuomet *./testas* (jeigu UNIX) 
+
+
+## Unit testų pavyzdys:
+```shell
+TEST(test_studentas, test_Pliuso_Operatoriaus_Galutinis)
+    {
+        Studentas s1("Al Ra 10 10");
+        Studentas s2("Al Ra 1 1");
+        Studentas s3 = s1 + s2;
+        ASSERT_EQ(s3.getGalutinis(), 8.2);
+    }
+```    
+Rezultatas:
+```shell
+[ RUN      ] test_studentas.test_Pliuso_Operatoriaus_Galutinis
+[       OK ] test_studentas.test_Pliuso_Operatoriaus_Galutinis (0 ms)
+[----------] 10 tests from test_studentas (39 ms total)
+
+[----------] Global test environment tear-down
+[==========] 10 tests from 1 test suite ran. (62 ms total)
+[  PASSED  ] 10 tests.
+```
 
 # v1.5
 
 - Parašyta abstrakčioji bazinė klasė "Zmogus"
-- Derived klasė - S"Studentas"
+- Derived klasė - "Studentas"
 
 
 # v1.2
@@ -81,8 +118,7 @@ Spartos analizė atlikta su vektoriais.
 Pridėjus -O1 programos nuskaitymo bei perrašymo greitis sumažėjo beveik lygiai dvigubai. Taikant -O2 bei -O3 skirtumo nuo pirmo optimizacijos lygio nebuvo.
  
 # Pradinė užduoties repozitorija
-
-# <br />[v1.0](https://github.com/Definitelynotaspruce/2-oji_uzduotis) 
+ [v1.0](https://github.com/Definitelynotaspruce/2-oji_uzduotis)
 
 
 

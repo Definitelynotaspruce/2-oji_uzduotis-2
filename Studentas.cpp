@@ -1,10 +1,10 @@
 #include "headeriai/Studentas.h"
 #include <sstream>
 
-Studentas::Studentas(const std::string &ei)
+Studentas::Studentas(const std::string &eilute)
 {
     std::string naujas;
-    std::istringstream e(ei);
+    std::istringstream e(eilute);
     e >> vardas >> pavarde;
 
     while (e >> naujas)
@@ -13,8 +13,6 @@ Studentas::Studentas(const std::string &ei)
     }
     egzaminas = *(pazymiai.end() - 1);
     pazymiai.erase(pazymiai.end() - 1);
-    setVidurkis();
-    setMediana();
     galutinis = galutinisBalas();
 }
 
@@ -24,8 +22,6 @@ Studentas::Studentas(const Studentas &studentas)
     pavarde = studentas.pavarde;
     pazymiai = studentas.pazymiai;
     egzaminas = studentas.egzaminas;
-    vidurkis = studentas.vidurkis;
-    mediana = studentas.mediana;
     galutinis = studentas.galutinis;
 }
 
@@ -36,9 +32,7 @@ Studentas &Studentas::operator=(const Studentas &studentas)
         vardas = studentas.vardas;
         pavarde = studentas.pavarde;
         pazymiai = studentas.pazymiai;
-        egzaminas = studentas.egzaminas;
-        vidurkis = studentas.vidurkis;
-        mediana = studentas.mediana;
+        egzaminas = studentas.egzaminas;;
         galutinis = studentas.galutinis;
     }
 
@@ -77,7 +71,7 @@ Studentas Studentas::operator+(const Studentas &studentas) const
     {
         Studentas s(*this);
         s.pazymiai.insert(s.pazymiai.end(), studentas.pazymiai.begin(), studentas.pazymiai.end());
-
+               
         return s;
     }
     return *this;
@@ -114,28 +108,29 @@ double Studentas::galutinisBalas()
         return galutinis;
     }
     else
-    {
-        galutinis = vidurkis * 0.4 + egzaminas * 0.6;
+    {   
+        
+        galutinis = calculateVidurkis() * 0.4 + egzaminas * 0.6;
 
         return galutinis;
     }
 }
 
 // cia medianai apskaiciuoti
-void Studentas::setMediana()
+double Studentas::calculateMediana()
 {
     std::sort(pazymiai.begin(), pazymiai.end());
     if (pazymiai.size() % 2 != 0)
-        mediana = (double)pazymiai[pazymiai.size() / 2];
-    mediana = (double)(pazymiai[(pazymiai.size() - 1) / 2] + pazymiai[pazymiai.size() / 2]) / 2.0;
+        return (double)pazymiai[pazymiai.size() / 2];
+    return (double)(pazymiai[(pazymiai.size() - 1) / 2] + pazymiai[pazymiai.size() / 2]) / 2.0;
 }
 
 // cia vidurkiui apskaiciuoti
-void Studentas::setVidurkis()
+double Studentas::calculateVidurkis()
 {
     double suma = 0;
     for (size_t i = 0; i < pazymiai.size(); i++)
         suma += pazymiai[i];
 
-    vidurkis = (suma / pazymiai.size());
+    return (suma / pazymiai.size());
 }

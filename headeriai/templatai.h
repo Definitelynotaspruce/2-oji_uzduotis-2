@@ -2,6 +2,7 @@
 #include <exception>
 
 template <typename Container>
+//! Duomenų įvesties nuskaitymo funkcija
 Container nuskaitymas (char &failai)
 {    
     char ivedimas, mediana;
@@ -28,6 +29,7 @@ Container nuskaitymas (char &failai)
 }
 
 template <typename Container>
+//! Duomenų išvedimo funkcija
 void isvedimas(Container &a, std::string failoVardas)
 {
     std::ofstream fr ("Rez"  + failoVardas);   
@@ -46,6 +48,7 @@ void isvedimas(Container &a, std::string failoVardas)
 }
 
 template <typename Container>
+//! Duomenų nuskaitymo iš failo funkcija
 void skaitymasfailo( Container &a, std::string failopavadinimas )
 {   
     std::string vardas, pavarde, eilute, kiek; 
@@ -74,6 +77,7 @@ void skaitymasfailo( Container &a, std::string failopavadinimas )
 }
 
 template <typename Container>
+//! Duomenų įvedinėjimo ranka funkcija (vedamas studento vardas, pavardė, pažymiai bei egzaminas)
 void ivedinejimas(Container &a)
 {
     char ranka;
@@ -89,6 +93,7 @@ void ivedinejimas(Container &a)
 }
 
 template <typename Container>
+//! Tekstinio failo generavimo funkcija, kuri kuria penkis .txt tipo failus (100,1000,10000,1000000,10000000 studentų)
 void tekstogeneravimas (Container &a)
 { 
     srand (time(NULL));    
@@ -130,7 +135,7 @@ void tekstogeneravimas (Container &a)
         start = std::chrono::system_clock::now(); 
         //conteineriu split funkcijos
         //split_1  (a, protingas, vargsas);
-        split_2 (a, protingas, vargsas);  
+        split_2 (a, vargsas);  
         //split_3 (a, vargsas);
         //split_4 (a, protingas, vargsas);
         end = std::chrono::system_clock::now();        
@@ -149,6 +154,7 @@ void tekstogeneravimas (Container &a)
 }
 
 template <typename Container>
+//! Konteinerių splitinimo metodas su remove_copy_if bei copy_if (naudojami trys konteineriai)
 void split_1(Container &studentai, Container &protingi, Container &vargsai)
 {
     std::remove_copy_if ( studentai.begin(), studentai.end(), std::back_inserter(vargsai), daugiau_uz_5 );    
@@ -157,13 +163,15 @@ void split_1(Container &studentai, Container &protingi, Container &vargsai)
 }
 
 template <typename Container>
-void split_2(Container &studentai, Container &protingi, Container &vargsai)
+//! Konteinerių splitinimo metodas su remove_copy_if (naudojami du konteineriai)
+void split_2(Container &studentai, Container &vargsai)
 {
     std::remove_copy_if ( studentai.begin(), studentai.end(), std::back_inserter(vargsai), daugiau_uz_5 );    
     studentai.erase ( remove_if ( studentai.begin(), studentai.end(), maziau_uz_5), studentai.end() );    
 }
 
 template <typename Container>
+//! Konteinerių splitinimo metodas su stable_partition (naudojami du konteineriai)
 void split_3(Container &studentai, Container &vargsai)
 {
     auto it = stable_partition (studentai.begin(), studentai.end(), daugiau_uz_5);
@@ -172,6 +180,7 @@ void split_3(Container &studentai, Container &vargsai)
 }
 
 template <typename Container>
+//! Konteinerių splitinimo metodas su remove_copy_if bei copy_if (naudojami trys konteineriai), taciau neistrinamas pradinis konteineris
 void split_4(Container &studentai, Container &protingi, Container &vargsai)
 {
     std::remove_copy_if ( studentai.begin(), studentai.end(), std::back_inserter(vargsai), daugiau_uz_5 );    
