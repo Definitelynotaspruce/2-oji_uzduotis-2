@@ -1,5 +1,3 @@
-Documentation           {#mainpage}
-========
 
 # 2-oji_užduotis
 [GitHub repozitorija](https://github.com/Definitelynotaspruce/2-oji_uzduotis)
