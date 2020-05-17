@@ -15,6 +15,6 @@ class Zmogus
 
     inline virtual std::string getVardas() const { return vardas; };
     inline virtual std::string getPavarde() const { return pavarde; };
-    inline virtual std::string getVArdasPavarde() const { return vardas + pavarde; };
+    inline virtual std::string getVArdasPavarde() const { return vardas + " " + pavarde; };
 
 };
