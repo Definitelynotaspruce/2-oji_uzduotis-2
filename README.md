@@ -35,7 +35,7 @@ Jeigu vartotojas paririnkęs, jog duomenis ves ranka:
 
 
 # v2.0
-- Sugeneruota ["Doxygen"](html/index.html) dokumentacija
+- Sugeneruota ["Doxygen"](http://www.doxygen.nl/) dokumentacija
 - Naudojantis Google Test frameworku realizuoti 10 Unit testų
 - Testų metu aptikta bei sutvarkyta smulki sudėties operatoriaus loginė klaida
 - Papildytas **Makefile** (Kad veiktų su testais) 
