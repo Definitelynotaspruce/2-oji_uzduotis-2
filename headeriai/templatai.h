@@ -20,7 +20,7 @@ Container nuskaitymas (char &failai)
     cpatikrinimas(mediana, 'm','v');  
     
     Container a;
-
+   // a.reserve(2000);
     if (failai == 't') tekstogeneravimas (a);
     else if (ivedimas == 'f') skaitymasfailo(a, "Studentai.txt");
     else ivedinejimas(a);
@@ -35,15 +35,24 @@ void isvedimas(Container &a, std::string failoVardas)
     std::ofstream fr ("Rez"  + failoVardas);   
     std::string br (70, '-');
     fr << std::left << std::setw(10) << "Vardas" << std::left << std::setw(10) << "Pavarde" << std::right << std::setw(10) << "Metinis" << std::endl;        
-    fr << br << std::endl;    
-    auto it = a.begin();
-    while (it != a.end())
+    fr << br << std::endl; 
+    std::cout << "SAIZIKAS " << a.size() << std::endl;
+    std::cout << "CAPACIKAS " << a.capacity() << std::endl;   
+    //auto it = a.begin();
+    //std::cout << it->getVardas() << " GRAZUS NE" << std::endl;
+    for(auto it : a)
     {
-        fr << std::left << std::setw(15) << (*it).getVardas() << std::left << std::setw(15); 
-        fr << (*it).getPavarde() << std::right << std::setw(4);
-        fr << std::fixed << std::setprecision(2) << (*it).getGalutinis() << std::endl;             
+        fr << std::left << std::setw(15) << it.getVardas() << std::left << std::setw(15); 
+        fr << it.getPavarde() << std::right << std::setw(4);
+        fr << std::fixed << std::setprecision(2) << it.getGalutinis() << std::endl;
+    }
+/*     while (it != a.end())
+    {
+        fr << std::left << std::setw(15) << it->getVardas() << std::left << std::setw(15); 
+        fr << it->getPavarde() << std::right << std::setw(4);
+        fr << std::fixed << std::setprecision(2) << it->getGalutinis() << std::endl;             
         it++;
-    }     
+    }      */
     fr.close();
 }
 
@@ -53,6 +62,7 @@ void skaitymasfailo( Container &a, std::string failopavadinimas )
 {   
     std::string vardas, pavarde, eilute, kiek; 
     std::ifstream fd;
+    int realokacija = 0;
     try
     {
         fd.open (failopavadinimas);
@@ -61,11 +71,17 @@ void skaitymasfailo( Container &a, std::string failopavadinimas )
             throw std::ios_base::failure("KLAIDA:: NERA TOKIO FAILO, todel viska veskite ranka :) ");
         }
         std::istringstream na(eilute);
+        size_t cnt = 0;
         while ( getline (fd, eilute) )
         {
             Studentas stud(eilute);
-            a.push_back(stud);               
+            a.push_back(stud); 
+            if(cnt == 384)
+                std::cout << "URA " << stud.getVardas() << std::endl;
+            ++cnt;
+            //if( a.capacity() == a.size() ) realokacija++;              
         }
+        std::cout << "REALOKACIJA IVYKO " << cnt << std::endl;
         fd.close();
     }
     catch(const std::exception& e)
@@ -101,6 +117,9 @@ void tekstogeneravimas (Container &a)
     int failusk;
     Container protingas;
     Container vargsas;
+    protingas.reserve(2000);
+    vargsas.reserve(2000);
+
     std::cout << "----------------------------------------------" << std::endl << std::endl;
     
     for (int z = 0; z < FAILU_SK; z++ )
@@ -135,9 +154,9 @@ void tekstogeneravimas (Container &a)
         start = std::chrono::system_clock::now(); 
         //conteineriu split funkcijos
         //split_1  (a, protingas, vargsas);
-        split_2 (a, vargsas);  
+        //split_2 (a, vargsas);  
         //split_3 (a, vargsas);
-        //split_4 (a, protingas, vargsas);
+        split_4 (a, protingas, vargsas);
         end = std::chrono::system_clock::now();        
         elapsed_seconds = end - start;
         std::cout << "Vektoriu perrasymas uztruko " << elapsed_seconds.count() << std::endl;           
@@ -145,7 +164,7 @@ void tekstogeneravimas (Container &a)
         start = std::chrono::system_clock::now();        
        //int protinguSk = a.size();
         isvedimas(vargsas, std::to_string(failusk) + "vargsai.txt");
-        isvedimas(a, std::to_string(failusk) + "protingi.txt"); 
+        //isvedimas(protingas, std::to_string(failusk) + "protingi.txt"); 
         end = std::chrono::system_clock::now();
         elapsed_seconds = end - start;
         std::cout << "Isvedimas uztruko " << elapsed_seconds.count() << std::endl;
@@ -153,7 +172,7 @@ void tekstogeneravimas (Container &a)
     }  
 }
 
-template <typename Container>
+/* template <typename Container>
 //! Konteinerių splitinimo metodas su remove_copy_if bei copy_if (naudojami trys konteineriai)
 void split_1(Container &studentai, Container &protingi, Container &vargsai)
 {
@@ -177,7 +196,7 @@ void split_3(Container &studentai, Container &vargsai)
     auto it = stable_partition (studentai.begin(), studentai.end(), daugiau_uz_5);
     copy ( it , studentai.end(), std::back_inserter(vargsai));
     studentai.erase(it, studentai.end());
-}
+} */
 
 template <typename Container>
 //! Konteinerių splitinimo metodas su remove_copy_if bei copy_if (naudojami trys konteineriai), taciau neistrinamas pradinis konteineris
@@ -186,3 +205,10 @@ void split_4(Container &studentai, Container &protingi, Container &vargsai)
     std::remove_copy_if ( studentai.begin(), studentai.end(), std::back_inserter(vargsai), daugiau_uz_5 );    
     std::copy_if ( studentai.begin(), studentai.end(), std::back_inserter(protingi), daugiau_uz_5 );   
 }
+
+/* template <typename Container>
+void split_5(Container &studentai, Container &protingi, Container &vargsai)
+{
+    std::remove_copy_if ( studentai.begin(), studentai.end(), std::back_inserter(vargsai), daugiau_uz_5 );    
+    std::copy_if ( studentai.begin(), studentai.end(), std::back_inserter(protingi), daugiau_uz_5 );   
+} */
