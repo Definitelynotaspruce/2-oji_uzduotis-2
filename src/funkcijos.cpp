@@ -1,7 +1,7 @@
 //cia bendros funkcijos
 
-#include "headeriai/funkcijos.h"
-#include "headeriai/templatai.h"
+#include "../headeriai/funkcijos.h"
+#include "../headeriai/templatai.h"
 
 // cia patikrina ar ivede neneigiama skaiciu studentu ir ar ne raide
 void skpatikrinimas (int &n)

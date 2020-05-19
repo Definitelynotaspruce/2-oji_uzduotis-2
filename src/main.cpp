@@ -1,8 +1,8 @@
 
-#include "headeriai/Studentas.h"
-#include "headeriai/funkcijos.h"
-#include "headeriai/templatai.h"
-#include "headeriai/vector.h"
+#include "../headeriai/Studentas.h"
+#include "../headeriai/funkcijos.h"
+#include "../headeriai/templatai.h"
+#include "../headeriai/vector.h"
 
 int main()
 {

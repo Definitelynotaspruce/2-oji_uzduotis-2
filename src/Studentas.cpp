@@ -1,4 +1,4 @@
-#include "headeriai/Studentas.h"
+#include "../headeriai/Studentas.h"
 #include <sstream>
 
 Studentas::Studentas(const std::string &eilute)

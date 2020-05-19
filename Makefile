@@ -1,6 +1,26 @@
-main: funkcijos.o Studentas.o main.o 
-	g++ -Wall -o  main main.cpp funkcijos.cpp Studentas.cpp -std=c++17
-test: 
-	g++ -o testas testai/testukas.cpp Studentas.cpp -std=c++17 -lgtest -lpthread
+CXX = g++
+CXXFLAGS = -Wall -std=c++17 -pedantic
+
+NAME = main
+
+PATH_TO_SRC := src/
+SRC_FILES = $(wildcard $(PATH_TO_SRC)*.cpp)
+OBJECT_OUT = $(SRC_FILES:.cpp=.o)
+
+default: $(SRC_FILES)
+	$(CXX) $(CXXFLAGS) -o $(NAME)  $^ 
+
+.PHONY: build
+build: $(SRC_FILES)
+	mkdir -p build
+	$(CXX) -c $^ $(CXXFLAGS)
+	mv $(OBJECT_OUT) build
+
+.PHONY: clean
 clean:
-	rm *.o *.txt main testas
+	rm -f *.o $(NAME)
+
+.PHONY: cleanall
+cleanall:
+	rm -f *.o $(NAME)
+	rm -R build
