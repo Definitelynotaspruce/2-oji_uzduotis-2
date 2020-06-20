@@ -1,5 +1,6 @@
 #include <string>
 #include <exception>
+#include "funkcijos.h"
 
 template <typename Container>
 //! Duomenų įvesties nuskaitymo funkcija
@@ -35,15 +36,13 @@ void isvedimas(Container &a, std::string failoVardas)
     std::ofstream fr ("Rez"  + failoVardas);   
     std::string br (70, '-');
     fr << std::left << std::setw(10) << "Vardas" << std::left << std::setw(10) << "Pavarde" << std::right << std::setw(10) << "Metinis" << std::endl;        
-    fr << br << std::endl;    
-    auto it = a.begin();
-    while (it != a.end())
+    fr << br << std::endl;
+    for(auto it : a)
     {
-        fr << std::left << std::setw(15) << (*it).getVardas() << std::left << std::setw(15); 
-        fr << (*it).getPavarde() << std::right << std::setw(4);
-        fr << std::fixed << std::setprecision(2) << (*it).getGalutinis() << std::endl;             
-        it++;
-    }     
+        fr << std::left << std::setw(15) << it.getVardas() << std::left << std::setw(15); 
+        fr << it.getPavarde() << std::right << std::setw(4);
+        fr << std::fixed << std::setprecision(2) << it.getGalutinis() << std::endl;
+    } 
     fr.close();
 }
 
@@ -66,6 +65,7 @@ void skaitymasfailo( Container &a, std::string failopavadinimas )
             Studentas stud(eilute);
             a.push_back(stud);               
         }
+       
         fd.close();
     }
     catch(const std::exception& e)
@@ -103,28 +103,30 @@ void tekstogeneravimas (Container &a)
     Container vargsas;
     std::cout << "----------------------------------------------" << std::endl << std::endl;
     
-    for (int z = 0; z < FAILU_SK; z++ )
+    for (int z = 4; z < FAILU_SK; z++ )
     {   
         failusk = 1000*pow(10,z);
         
-        auto start = std::chrono::system_clock::now();
+         auto start = std::chrono::system_clock::now();
 
         std::ofstream dr ("students" + std::to_string(failusk) + ".txt");
         std::cout << "Failas " << "students" + std::to_string(failusk) + ".txt" << " atidarytas " << std::endl;
-
-        for (int i = 0; i < failusk ; i++ )
+ 
+         for (int i = 0; i < failusk ; i++ )
         {
             dr << std::left << "Studentas" << std::setw(10) << rand()%100 << std::left << "Pavarde" <<  rand()%100 << std::right << std::setw(10);
     
             for (int j = 0; j < pazymiusk; j++ )
             dr <<  rand()%10 +1  << "\t" ;
         
-            dr << std::endl;
+            dr << std::endl; 
         }
-        dr.close();
+        dr.close(); 
+       
+
         auto end = std::chrono::system_clock::now();
         std::chrono::duration<double> elapsed_seconds = end - start;
-        std::cout << std::endl << "Failo generavimas uztruko " << elapsed_seconds.count() << std::endl;   
+        std::cout << std::endl << "Failo generavimas uztruko " << elapsed_seconds.count() << std::endl;    
         
         start = std::chrono::system_clock::now();        
         skaitymasfailo(a, "students" + std::to_string(failusk) + ".txt");
@@ -142,8 +144,7 @@ void tekstogeneravimas (Container &a)
         elapsed_seconds = end - start;
         std::cout << "Vektoriu perrasymas uztruko " << elapsed_seconds.count() << std::endl;           
         
-        start = std::chrono::system_clock::now();        
-       //int protinguSk = a.size();
+        start = std::chrono::system_clock::now();
         isvedimas(vargsas, std::to_string(failusk) + "vargsai.txt");
         isvedimas(a, std::to_string(failusk) + "protingi.txt"); 
         end = std::chrono::system_clock::now();
@@ -158,8 +159,9 @@ template <typename Container>
 void split_1(Container &studentai, Container &protingi, Container &vargsai)
 {
     std::remove_copy_if ( studentai.begin(), studentai.end(), std::back_inserter(vargsai), daugiau_uz_5 );    
-    std::copy_if ( studentai.begin(), studentai.end(), std::back_inserter(protingi), daugiau_uz_5 );   
+    std::copy_if ( studentai.begin(), studentai.end(), std::back_inserter(protingi), daugiau_uz_5 ); 
     studentai.erase (studentai.begin(), studentai.end());
+
 }
 
 template <typename Container>
@@ -167,14 +169,14 @@ template <typename Container>
 void split_2(Container &studentai, Container &vargsai)
 {
     std::remove_copy_if ( studentai.begin(), studentai.end(), std::back_inserter(vargsai), daugiau_uz_5 );    
-    studentai.erase ( remove_if ( studentai.begin(), studentai.end(), maziau_uz_5), studentai.end() );    
+    studentai.erase ( std::remove_if ( studentai.begin(), studentai.end(), maziau_uz_5), studentai.end() );    
 }
 
 template <typename Container>
 //! Konteinerių splitinimo metodas su stable_partition (naudojami du konteineriai)
 void split_3(Container &studentai, Container &vargsai)
 {
-    auto it = stable_partition (studentai.begin(), studentai.end(), daugiau_uz_5);
+    auto it = std::stable_partition (studentai.begin(), studentai.end(), daugiau_uz_5);
     copy ( it , studentai.end(), std::back_inserter(vargsai));
     studentai.erase(it, studentai.end());
 }

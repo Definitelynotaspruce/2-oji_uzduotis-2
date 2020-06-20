@@ -43,4 +43,3 @@ bool beta(Studentas &a, Studentas &b);
 bool maziau_uz_5 ( Studentas &s);
 //! Bool tipo funkcija, tikrinanti ar studento galutinis balas didesnis už 5
 bool daugiau_uz_5 ( Studentas &s);
-
